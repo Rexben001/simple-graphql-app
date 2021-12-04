@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ChakraProvider } from '@chakra-ui/react';
+import { createClient, Provider as UrqlProvider } from 'urql';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const client = createClient({
+  url: 'http://localhost:3333/graphql',
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ChakraProvider>
+      <UrqlProvider value={client}>
+        <App />
+      </UrqlProvider>
+    </ChakraProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
