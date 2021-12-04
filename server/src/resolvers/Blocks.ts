@@ -11,7 +11,6 @@ export class BlocksResolver {
       if (!time) {
         const date: Date = new Date(); // today's date and time in ISO format
         time = Date.parse(date.toISOString());
-        console.log('Here');
       }
       const { data } = await axios.get(
         `https://blockchain.info/blocks/${time}?format=json`
