@@ -5,6 +5,8 @@ import 'reflect-metadata';
 import { buildSchema } from 'type-graphql';
 import { BlocksResolver } from './resolvers/Blocks';
 
+const PORT = process.env.PORT || 3333;
+
 const main = async () => {
   const schema = await buildSchema({
     resolvers: [BlocksResolver],
@@ -23,9 +25,9 @@ const main = async () => {
 
   server.applyMiddleware({ app });
 
-  app.listen({ port: 3333 }, () =>
+  app.listen({ port: PORT }, () =>
     console.log(
-      `🚀 Server ready and listening at ==> http://localhost:3333${server.graphqlPath}`
+      `🚀 Server ready and listening at ==> http://localhost:${PORT}${server.graphqlPath}`
     )
   );
 };

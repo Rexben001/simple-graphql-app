@@ -7,7 +7,7 @@
     "start": "npm run serve",
     "serve": "node dist/server.js",
     "watch-node": "nodemon dist/server.js",
-    "build-ts": "tsc",
+    "build-ts": "rm -rf dist && tsc",
     "watch-ts": "tsc -w",
     "test": "jest"
   },
@@ -17,7 +17,7 @@
     "node",
     "javascript"
   ],
-  "author": "Alexander Nnakwue",
+  "author": "Rexben",
   "license": "MIT",
   "devDependencies": {
     "@types/express": "^4.17.13",

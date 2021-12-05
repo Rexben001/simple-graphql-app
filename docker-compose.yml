@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: './server'
+      dockerfile: Dockerfile
+    ports:
+      - '3333:3333'
+    volumes:
+      - /usr/app/node_modules
+      - ./server:/usr/app
+
+  client:
+    ports:
+      - 3000:3000
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./client
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    tty: true
+    volumes:
+      - /usr/appnode_modules
+      - ./client:/usr/app
