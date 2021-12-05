@@ -1,11 +1,13 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Flex, Box, Text } from '@chakra-ui/react';
-import { useQuery } from 'urql';
+import { Flex, Box, Text, IconButton } from '@chakra-ui/react';
+import { ChevronLeftIcon } from '@chakra-ui/icons';
 
+import Queries from '../utils/queries';
 import CustomTable from '../components/customTable';
+import Spinner from '../components/spinner';
 
-const BLOCKS_QUERY = `
+const BLOCK_QUERY = `
   query returnBlock($hash: String!) {
     returnBlock(hash: $hash){
         block_index,
@@ -23,21 +25,16 @@ const BLOCKS_QUERY = `
   }
 `;
 
-function Details(props: any) {
+const Details = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const query = new URLSearchParams(location.search);
   const hash = query.get('hash');
 
-  console.log('props>>', props);
-  const [result] = useQuery({
-    query: BLOCKS_QUERY,
-    variables: {
-      hash: `${hash}`,
-    },
+  const { data, fetching, error } = Queries({
+    query: BLOCK_QUERY,
+    variables: { name: 'hash', value: `${hash}` },
   });
-
-  const { data, fetching, error } = result;
 
   const columns = React.useMemo(
     () => [
@@ -70,8 +67,8 @@ function Details(props: any) {
   );
 
   return (
-    <Box>
-      <Text
+    <Box pt='60px' px='2rem'>
+      <Flex
         onClick={() =>
           navigate('/', {
             replace: true,
@@ -79,46 +76,77 @@ function Details(props: any) {
         }
         cursor='pointer'
       >
-        Back to Home
-      </Text>
+        <IconButton
+          icon={<ChevronLeftIcon h={6} w={6} />}
+          aria-label='back'
+          backgroundColor='rgb(242, 246, 255)'
+          border='none'
+        />
+        <Text alignSelf='center' pl='.2rem'>
+          Back to Home
+        </Text>
+      </Flex>
+
       {fetching ? (
-        <p>Loading</p>
+        <Spinner />
       ) : data?.returnBlock ? (
         <Flex flexDir='column'>
-          <Text>
-            <strong>Hash </strong>
-            {hash}
-          </Text>
-          <Text>
-            <strong>Block Index </strong>
-            {data?.returnBlock?.block_index}
-          </Text>
-          <Text>
-            <strong>Previous Block </strong>
-            {data?.returnBlock?.prev_block}
-          </Text>
-          <Text>
-            <strong>Size </strong>
-            {data?.returnBlock?.size}
-          </Text>
+          <Flex
+            flexDir='column'
+            bg='#e8f0fe'
+            padding='1rem'
+            borderRadius='6px'
+            mt='1rem'
+          >
+            <Text>
+              <Text as='span' color='#718096' fontWeight={600}>
+                Hash{' '}
+              </Text>
+              {hash}
+            </Text>
+            <Text>
+              <Text as='span' color='#718096' fontWeight={600}>
+                Block Index{' '}
+              </Text>
+              {data?.returnBlock?.block_index}
+            </Text>
+            <Text>
+              <Text as='span' color='#718096' fontWeight={600}>
+                Previous Block{' '}
+              </Text>
+              {data?.returnBlock?.prev_block}
+            </Text>
+            <Text>
+              <Text as='span' color='#718096' fontWeight={600}>
+                Size{' '}
+              </Text>
+              {data?.returnBlock?.size}
+            </Text>
+          </Flex>
 
-          <Text>Block Transaction </Text>
-          <CustomTable
-            columns={columns}
-            data={data?.returnBlock?.tx.map((data: any) => {
-              const time = parseInt(data.time) * 1000;
-              return {
-                ...data,
-                time: new Date(time).toLocaleString(),
-              };
-            })}
-          />
+          <Flex mx='2rem' flexDir='column' mt='1rem'>
+            <Text textTransform='uppercase' fontWeight={600} color='#718096'>
+              Block Transaction{' '}
+            </Text>
+            <CustomTable
+              columns={columns}
+              data={data?.returnBlock?.tx.map((data: any) => {
+                const time = parseInt(data.time) * 1000;
+                return {
+                  ...data,
+                  time: new Date(time).toLocaleString(),
+                };
+              })}
+            />
+          </Flex>
         </Flex>
       ) : (
-        <p>{error?.message}</p>
+        <Text color='red' textAlign='center' marginTop='20vh' fontSize='2rem'>
+          {error?.message}
+        </Text>
       )}
     </Box>
   );
-}
+};
 
 export default Details;
