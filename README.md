@@ -10,7 +10,7 @@ Start up backend GraphQL server `make start-backend`
 
 Start up frontend app `make start-frontend`
 
-You can also run it with docker
+Alternatively, you can run it with docker
 
 Run `make start-docker`
 

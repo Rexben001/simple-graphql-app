@@ -25,7 +25,7 @@ import {
   ChevronLeftIcon,
 } from '@chakra-ui/icons';
 
-function CustomTable({
+const CustomTable = ({
   columns,
   data,
   home,
@@ -33,7 +33,7 @@ function CustomTable({
   columns: any;
   data: any;
   home?: boolean;
-}) {
+}) => {
   const navigate = useNavigate();
   const {
     getTableProps,
@@ -185,6 +185,6 @@ function CustomTable({
       </Flex>
     </>
   );
-}
+};
 
 export default CustomTable;
