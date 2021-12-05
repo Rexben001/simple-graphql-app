@@ -65,6 +65,10 @@ function Home() {
         Header: 'Time',
         accessor: 'time',
       },
+      {
+        Header: '',
+        accessor: 'view',
+      },
     ],
     []
   );
@@ -102,6 +106,7 @@ function Home() {
                 return {
                   ...data,
                   time: new Date(time).toLocaleString(),
+                  view: 'view more...',
                 };
               })}
               home={true}

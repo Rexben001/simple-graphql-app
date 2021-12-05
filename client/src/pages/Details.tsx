@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Flex, Box, Text, IconButton } from '@chakra-ui/react';
+import { Flex, Box, Text, IconButton, Divider } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 
 import Queries from '../utils/queries';
@@ -66,6 +66,24 @@ const Details = () => {
     []
   );
 
+  const DisplayDetails = ({
+    name,
+    data,
+  }: {
+    name: string;
+    data: number | string;
+  }) => (
+    <>
+      <Flex p='.5rem 2rem' justifyContent='space-between'>
+        <Text color='#718096' fontWeight={600}>
+          {name}
+        </Text>
+        <Text textAlign='left'>{data}</Text>
+      </Flex>
+      <Divider orientation='horizontal' />
+    </>
+  );
+
   return (
     <Box pt='60px' px='2rem'>
       <Flex
@@ -83,7 +101,7 @@ const Details = () => {
           border='none'
         />
         <Text alignSelf='center' pl='.2rem'>
-          Back to Home
+          Back to Homepage
         </Text>
       </Flex>
 
@@ -98,35 +116,24 @@ const Details = () => {
             borderRadius='6px'
             mt='1rem'
           >
-            <Text>
-              <Text as='span' color='#718096' fontWeight={600}>
-                Hash{' '}
-              </Text>
-              {hash}
-            </Text>
-            <Text>
-              <Text as='span' color='#718096' fontWeight={600}>
-                Block Index{' '}
-              </Text>
-              {data?.returnBlock?.block_index}
-            </Text>
-            <Text>
-              <Text as='span' color='#718096' fontWeight={600}>
-                Previous Block{' '}
-              </Text>
-              {data?.returnBlock?.prev_block}
-            </Text>
-            <Text>
-              <Text as='span' color='#718096' fontWeight={600}>
-                Size{' '}
-              </Text>
-              {data?.returnBlock?.size}
-            </Text>
+            <DisplayDetails name='Hash' data={hash || ''} />
+            <DisplayDetails
+              name=' Block Index'
+              data={data?.returnBlock?.block_index || ''}
+            />
+            <DisplayDetails
+              name='Previous Block'
+              data={data?.returnBlock?.prev_block || ''}
+            />
+            <DisplayDetails
+              name='Size'
+              data={`${data?.returnBlock?.size} bytes` || ''}
+            />
           </Flex>
 
           <Flex mx='2rem' flexDir='column' mt='1rem'>
             <Text textTransform='uppercase' fontWeight={600} color='#718096'>
-              Block Transaction{' '}
+              Block Transactions
             </Text>
             <CustomTable
               columns={columns}

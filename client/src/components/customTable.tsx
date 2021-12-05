@@ -60,7 +60,7 @@ function CustomTable({
 
   return (
     <>
-      <Table {...getTableProps()}>
+      <Table {...getTableProps()} size='md'>
         <Thead>
           {headerGroups.map((headerGroup) => (
             <Tr {...headerGroup.getHeaderGroupProps()}>
