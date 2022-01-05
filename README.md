@@ -1,8 +1,6 @@
-# Benjamin-Ajewole-Coding-Challenge
-
 ### How to start App
 
-Clone this repo `git clone https://github.com/NuriCareers/Benjamin-Ajewole-Coding-Challenge`
+Clone this repo `git clone https://github.com/Rexben001/simple-graphql-app`
 
 Install both frontend and backend packages `make install-packages`
 
@@ -34,12 +32,3 @@ Docker
 Jest
 Axios
 Supertest
-### Caching?
-
-I implemented client caching using `Urql`. If I had more time, I would have used Redis on the backend.
-
-### Hosting?
-
-- Deploy backend on AWS EC2 using CloudFormation templates that supports Auto-Scaling and Load Balancing
-
-- Deploy frontend on AWS S3 and CloudFront or Netlify
